@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "priority": 1100,
+  "package": "plus.dragons.createminingindustry.foundation.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "create_mining_industry.refmap.json",
+  "mixins": [
+    "AdvancementBehaviourAccessor",
+    "CreateAdvancementConstructor",
+    "CreateAdvancementMixin",
+    "CreateItemGroupBaseMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
