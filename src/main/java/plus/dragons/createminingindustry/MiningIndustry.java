@@ -38,24 +38,24 @@ public class MiningIndustry {
     }
 
     private void initAllEntries() {
-        ModItems.register();
-        ModBlocks.register();
-        ModBlockEntities.register();
-        ModEntityTypes.register();
-        ModFluids.register();
-        ModContainerTypes.register();
-        ModTags.register();
+        CmiItems.register();
+        CmiBlocks.register();
+        CmiBlockEntities.register();
+        CmiEntityTypes.register();
+        CmiFluids.register();
+        CmiContainerTypes.register();
+        CmiTags.register();
 
     }
     
     private void addForgeEventListeners(IEventBus forgeEventBus) {
-        forgeEventBus.addListener(ModItems::fillCreateItemGroup);
-        forgeEventBus.addListener(ModFluids::handleInkEffect);
+        forgeEventBus.addListener(CmiItems::fillCreateItemGroup);
+        forgeEventBus.addListener(CmiFluids::handleInkEffect);
     }
 
     public static void init(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            ModPackets.registerPackets();
+            CmiPackets.registerPackets();
             ModAdvancements.register();
             ModTriggers.register();
         });

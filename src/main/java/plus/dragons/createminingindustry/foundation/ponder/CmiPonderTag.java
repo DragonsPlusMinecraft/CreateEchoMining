@@ -4,11 +4,11 @@ import com.simibubi.create.foundation.ponder.PonderTag;
 import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createminingindustry.MiningIndustry;
 
-public class ModPonderTag extends PonderTag {
+public class CmiPonderTag extends PonderTag {
 
     // public static final PonderTag EXPERIENCE = create("experience").item(ModBlocks.DISENCHANTER.get(), true, false).addToIndex();
 
-    public ModPonderTag(ResourceLocation id) {
+    public CmiPonderTag(ResourceLocation id) {
         super(id);
     }
 

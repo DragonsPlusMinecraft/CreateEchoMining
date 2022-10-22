@@ -14,7 +14,7 @@ import net.minecraft.world.entity.MobCategory;
 import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.contraptions.mining.drill.PortableDrillEntity;
 
-public class ModEntityTypes {
+public class CmiEntityTypes {
 
     public static final EntityEntry<PortableDrillEntity> PORTABLE_DRILL = register("portable_one_time_drill", PortableDrillEntity::new, () -> PortableDrillEntity.Render::new,
             MobCategory.MISC, 4, 10, false, false, PortableDrillEntity::build).register();

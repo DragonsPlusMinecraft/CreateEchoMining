@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
 
-public enum ModPackets {
+public enum CmiPackets {
 
     // Client to Server
     TODO(ExamplePacket.class, ExamplePacket::new, PLAY_TO_SERVER);
@@ -31,7 +31,7 @@ public enum ModPackets {
 
     private LoadedPacket<?> packet;
 
-    <T extends SimplePacketBase> ModPackets(Class<T> type, Function<FriendlyByteBuf, T> factory,
+    <T extends SimplePacketBase> CmiPackets(Class<T> type, Function<FriendlyByteBuf, T> factory,
                                             NetworkDirection direction) {
         packet = new LoadedPacket<>(type, factory, direction);
     }
@@ -42,7 +42,7 @@ public enum ModPackets {
                 .clientAcceptedVersions(NETWORK_VERSION_STR::equals)
                 .networkProtocolVersion(() -> NETWORK_VERSION_STR)
                 .simpleChannel();
-        for (ModPackets packet : values())
+        for (CmiPackets packet : values())
             packet.packet.register();
     }
 

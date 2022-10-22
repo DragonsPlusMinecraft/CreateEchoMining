@@ -12,7 +12,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
-public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
+public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     ITagManager<Block> BLOCK_TAGS = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags());
     ITagManager<Item> ITEM_TAGS = Objects.requireNonNull(ForgeRegistries.ITEMS.tags());
     ITagManager<Fluid> FLUID_TAGS = Objects.requireNonNull(ForgeRegistries.FLUIDS.tags());
@@ -67,18 +66,18 @@ public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
     
     static void register() {
         CreateRegistrate registrate = MiningIndustry.registrate();
-        Arrays.stream(ModBlockTags.values())
-            .filter(ModTags::hasDatagen)
+        Arrays.stream(CmiBlockTags.values())
+            .filter(CmiTags::hasDatagen)
             .forEach(tag -> registrate.addDataGenerator(ProviderType.BLOCK_TAGS, tag::datagen));
-        Arrays.stream(ModItemTags.values())
-            .filter(ModTags::hasDatagen)
+        Arrays.stream(CmiItemTags.values())
+            .filter(CmiTags::hasDatagen)
             .forEach(tag -> registrate.addDataGenerator(ProviderType.ITEM_TAGS, tag::datagen));
-        Arrays.stream(ModFluidTags.values())
-            .filter(ModTags::hasDatagen)
+        Arrays.stream(CmiFluidTags.values())
+            .filter(CmiTags::hasDatagen)
             .forEach(tag -> registrate.addDataGenerator(ProviderType.FLUID_TAGS, tag::datagen));
     }
     
-    enum ModBlockTags implements ModTags<Block, RegistrateTagsProvider<Block>> {
+    enum CmiBlockTags implements CmiTags<Block, RegistrateTagsProvider<Block>> {
         BLAZE_MINE_SILK_TOUCH(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
@@ -102,12 +101,12 @@ public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
         final TagKey<Block> tag;
         final boolean datagen;
         
-        ModBlockTags(String namespace, boolean datagen) {
+        CmiBlockTags(String namespace, boolean datagen) {
             this.tag = BLOCK_TAGS.createTagKey(new ResourceLocation(namespace, toTagName(name())));
             this.datagen = datagen;
         }
         
-        ModBlockTags(boolean datagen) {
+        CmiBlockTags(boolean datagen) {
             this(MiningIndustry.MOD_ID, datagen);
         }
     
@@ -122,7 +121,7 @@ public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
         }
     }
     
-    enum ModItemTags implements ModTags<Item, RegistrateItemTagsProvider> {
+    enum CmiItemTags implements CmiTags<Item, RegistrateItemTagsProvider> {
         UPRIGHT_ON_BELT(CREATE, true) {
             @Override
             public void datagen(RegistrateItemTagsProvider pov) {
@@ -134,12 +133,12 @@ public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
         final TagKey<Item> tag;
         final boolean datagen;
     
-        ModItemTags(String namespace, boolean datagen) {
+        CmiItemTags(String namespace, boolean datagen) {
             this.tag = ITEM_TAGS.createTagKey(new ResourceLocation(namespace, toTagName(name())));
             this.datagen = datagen;
         }
     
-        ModItemTags(boolean datagen) {
+        CmiItemTags(boolean datagen) {
             this(MiningIndustry.MOD_ID, datagen);
         }
     
@@ -154,19 +153,19 @@ public interface ModTags<T, P extends RegistrateTagsProvider<T>> {
         }
     }
     
-    enum ModFluidTags implements ModTags<Fluid, RegistrateTagsProvider<Fluid>> {
+    enum CmiFluidTags implements CmiTags<Fluid, RegistrateTagsProvider<Fluid>> {
         //No experience fluid tag here as different ratios is not acceptable
         BLAZE_COLLECTABLE( false);
         
         final TagKey<Fluid> tag;
         final boolean datagen;
     
-        ModFluidTags(String namespace, boolean datagen) {
+        CmiFluidTags(String namespace, boolean datagen) {
             this.tag = FLUID_TAGS.createTagKey(new ResourceLocation(namespace, toTagName(name())));
             this.datagen = datagen;
         }
     
-        ModFluidTags(boolean datagen) {
+        CmiFluidTags(boolean datagen) {
             this(MiningIndustry.MOD_ID, datagen);
         }
     

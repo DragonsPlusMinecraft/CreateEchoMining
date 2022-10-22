@@ -28,8 +28,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
-import plus.dragons.createminingindustry.entry.ModEntityTypes;
-import plus.dragons.createminingindustry.entry.ModItems;
+import plus.dragons.createminingindustry.entry.CmiEntityTypes;
+import plus.dragons.createminingindustry.entry.CmiItems;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -50,7 +50,7 @@ public class PortableDrillEntity extends Entity {
     }
 
     public PortableDrillEntity(Level Level, double X, double Y, double Z, int durability) {
-        this(ModEntityTypes.PORTABLE_DRILL.get(), Level);
+        this(CmiEntityTypes.PORTABLE_DRILL.get(), Level);
         this.blocksBuilding = true;
         this.durability = durability;
         this.setPos(X + 0.5, Y, Z + 0.5);
@@ -71,7 +71,7 @@ public class PortableDrillEntity extends Entity {
             var blockPos = this.blockPosition();
             if(!level.getFluidState(blockPos).isEmpty())
                 collapse();
-            var others = level.getEntities(ModEntityTypes.PORTABLE_DRILL.get(), this.getBoundingBox(), entity->true);
+            var others = level.getEntities(CmiEntityTypes.PORTABLE_DRILL.get(), this.getBoundingBox(), entity->true);
             if(!others.isEmpty()){
                 others.forEach(PortableDrillEntity::collapse);
                 this.collapse();
@@ -156,7 +156,7 @@ public class PortableDrillEntity extends Entity {
         if(AllItems.WRENCH.isIn(item)){
             if(!level.isClientSide()){
                 this.getPassengers().forEach(Entity::stopRiding);
-                var drop = ModItems.PORTABLE_DRILL.asStack();
+                var drop = CmiItems.PORTABLE_DRILL.asStack();
                 drop.getOrCreateTag().putInt("durability",durability);
                 level.addFreshEntity(new ItemEntity(level,getX(),getY(),getZ(),drop));
                 this.discard();

@@ -9,7 +9,7 @@ import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.BlazeMinerStationBlock;
 
 
-public class ModBlocks {
+public class CmiBlocks {
 
     private static final CreateRegistrate REGISTRATE = MiningIndustry.registrate();
 
@@ -17,7 +17,7 @@ public class ModBlocks {
             .block("blaze_miner_station", BlazeMinerStationBlock::new)
             .initialProperties(SharedProperties::stone)
             .addLayer(() -> RenderType::cutoutMipped)
-            .transform(ModTags.pickaxeOnly())
+            .transform(CmiTags.pickaxeOnly())
             .blockstate((ctx, pov) -> pov.simpleBlock(ctx.get(), AssetLookup.standardModel(ctx, pov)))
             .simpleItem()
             .register();

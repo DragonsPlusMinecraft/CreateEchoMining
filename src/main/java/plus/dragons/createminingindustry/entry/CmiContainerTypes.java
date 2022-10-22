@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import plus.dragons.createminingindustry.MiningIndustry;
 
-public class ModContainerTypes {
+public class CmiContainerTypes {
 
     /*public static final MenuEntry<EnchantingGuideMenu> ENCHANTING_GUIDE_FOR_BLAZE =
             register("enchanting_guide_for_blaze", EnchantingGuideMenu::new, () -> EnchantingGuideScreen::new);*/

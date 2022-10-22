@@ -10,7 +10,7 @@ import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.
 import plus.dragons.createminingindustry.contraptions.mining.drill.PortableDrillItem;
 import plus.dragons.createminingindustry.event.FillCreateItemGroupEvent;
 
-public class ModItems {
+public class CmiItems {
 
     private static final CreateRegistrate REGISTRATE = MiningIndustry.registrate();
 

@@ -5,11 +5,11 @@ import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.BlazeMinerStationBlockEntity;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.BlazeMinerStationRenderer;
 
-public class ModBlockEntities {
+public class CmiBlockEntities {
 
     public static final BlockEntityEntry<BlazeMinerStationBlockEntity> BLAZE_MINER_STATION = MiningIndustry.registrate()
             .tileEntity("disenchanter", BlazeMinerStationBlockEntity::new)
-            .validBlocks(ModBlocks.BLAZE_MINER_STATION)
+            .validBlocks(CmiBlocks.BLAZE_MINER_STATION)
             .renderer(() -> BlazeMinerStationRenderer::new)
             .register();
 

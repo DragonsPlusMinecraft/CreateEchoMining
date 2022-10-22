@@ -3,7 +3,7 @@ package plus.dragons.createminingindustry.entry;
 import com.jozufozu.flywheel.core.PartialModel;
 import plus.dragons.createminingindustry.MiningIndustry;
 
-public class ModBlockPartials {
+public class CmiBlockPartials {
     
     /*public static final PartialModel
         COPIER_TOP = block("copier/top"),

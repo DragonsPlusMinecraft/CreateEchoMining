@@ -4,7 +4,7 @@ import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import plus.dragons.createminingindustry.entry.ModBlockEntities;
+import plus.dragons.createminingindustry.entry.CmiBlockEntities;
 
 public class BlazeMinerStationBlock extends HorizontalDirectionalBlock implements IWrenchable, ITE<BlazeMinerStationBlockEntity> {
     public BlazeMinerStationBlock(Properties pProperties) {
@@ -18,6 +18,6 @@ public class BlazeMinerStationBlock extends HorizontalDirectionalBlock implement
 
     @Override
     public BlockEntityType<? extends BlazeMinerStationBlockEntity> getTileEntityType() {
-        return ModBlockEntities.BLAZE_MINER_STATION.get();
+        return CmiBlockEntities.BLAZE_MINER_STATION.get();
     }
 }
