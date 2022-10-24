@@ -20,4 +20,6 @@ public class BlazeMinerStationBlock extends HorizontalDirectionalBlock implement
     public BlockEntityType<? extends BlazeMinerStationBlockEntity> getTileEntityType() {
         return CmiBlockEntities.BLAZE_MINER_STATION.get();
     }
+
+
 }

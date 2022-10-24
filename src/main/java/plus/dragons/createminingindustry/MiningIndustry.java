@@ -50,7 +50,6 @@ public class MiningIndustry {
     
     private void addForgeEventListeners(IEventBus forgeEventBus) {
         forgeEventBus.addListener(CmiItems::fillCreateItemGroup);
-        forgeEventBus.addListener(CmiFluids::handleInkEffect);
     }
 
     public static void init(final FMLCommonSetupEvent event) {
