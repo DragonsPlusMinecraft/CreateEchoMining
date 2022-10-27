@@ -4,7 +4,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import plus.dragons.createminingindustry.MiningIndustry;
-import plus.dragons.createminingindustry.contraptions.mining.blazeminer.MineWorkPermitItem;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.MineLocatorBarItem;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.BlazeFluidHolderItem;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.BlazeResourcePackageItem;
 import plus.dragons.createminingindustry.contraptions.mining.drill.PortableDrillItem;
@@ -18,7 +18,7 @@ public class CmiItems {
             .properties(prop -> prop.stacksTo(16))
             .register();
 
-    public static final ItemEntry<MineWorkPermitItem> MINE_WORK_PERMIT = REGISTRATE.item("mine_work_permit", MineWorkPermitItem::new)
+    public static final ItemEntry<MineLocatorBarItem> MINE_LOCATOR_BAR = REGISTRATE.item("mine_locator_bar", MineLocatorBarItem::new)
             .properties(prop -> prop.stacksTo(1))
             .register();
 
@@ -27,6 +27,7 @@ public class CmiItems {
             .register();
 
     public static final ItemEntry<BlazeResourcePackageItem> RESOURCE_PACKAGE = REGISTRATE.item("blaze_resource_package", BlazeResourcePackageItem::new)
+            .properties(prop -> prop.stacksTo(16))
             .register();
 
     public static void fillCreateItemGroup(FillCreateItemGroupEvent event) {

@@ -1,4 +1,4 @@
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.minefield;
+package plus.dragons.createminingindustry.contraptions.mining.blazeminer;
 
 import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.core.BlockPos;
@@ -6,21 +6,22 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.util.INBTSerializable;
 
-public class MiningTask implements INBTSerializable<CompoundTag> {
+public class MineFieldSubTask {
 
     AABB dutyAABB;
-    MineFieldInfo.MineTaskArea cachedArea;
+    MineFieldTask.SubTaskArea cachedArea;
     BlockPos.MutableBlockPos targetPos;
     Boolean done;
 
-    public MiningTask(AABB dutyAABB, MineFieldInfo.MineTaskArea cachedArea, BlockPos.MutableBlockPos targetPos) {
+    public MineFieldSubTask(AABB dutyAABB, MineFieldTask.SubTaskArea cachedArea, BlockPos.MutableBlockPos targetPos) {
         this.cachedArea = cachedArea;
         this.targetPos = targetPos;
         this.dutyAABB = dutyAABB;
         this.done = false;
     }
+
+    private MineFieldSubTask() {}
 
     public void nextPos(){
         if(targetPos.getX() >= dutyAABB.maxX){
@@ -48,7 +49,6 @@ public class MiningTask implements INBTSerializable<CompoundTag> {
         return done;
     }
 
-    @Override
     public CompoundTag serializeNBT() {
         var tag = new CompoundTag();
         tag.put("duty",NBTHelper.writeAABB(dutyAABB));
@@ -57,19 +57,28 @@ public class MiningTask implements INBTSerializable<CompoundTag> {
         return tag;
     }
 
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.dutyAABB = NBTHelper.readAABB((ListTag) nbt.get("duty"));
+    public static MineFieldSubTask fromNBT(CompoundTag nbt) {
+        var ret = new MineFieldSubTask();
+        ret.dutyAABB = NBTHelper.readAABB((ListTag) nbt.get("duty"));
         var pos = NbtUtils.readBlockPos((CompoundTag) nbt.get("target"));
-        this.targetPos = new BlockPos.MutableBlockPos(pos.getX(),pos.getY(),pos.getZ());
-        this.cachedArea = MineFieldInfo.MineTaskArea.deserializeNBT((CompoundTag) nbt.get("cached_area"));
+        ret.targetPos = new BlockPos.MutableBlockPos(pos.getX(),pos.getY(),pos.getZ());
+        ret.cachedArea = MineFieldTask.SubTaskArea.deserializeNBT((CompoundTag) nbt.get("cached_area"));
+        return ret;
     }
 
-    public MineFieldInfo.MineTaskArea getCachedArea() {
+    public MineFieldTask.SubTaskArea getCachedArea() {
         return cachedArea;
     }
 
     public BlockPos getTargetPos() {
         return targetPos.immutable();
+    }
+
+    @Override
+    public String toString() {
+        return "MineFieldSubTask{" +
+                "dutyAABB=" + dutyAABB +
+                ", cachedArea=" + cachedArea +
+                '}';
     }
 }

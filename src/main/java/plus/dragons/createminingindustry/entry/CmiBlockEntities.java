@@ -17,7 +17,7 @@ public class CmiBlockEntities {
 
     public static final BlockEntityEntry<MineCommandCenterBlockEntity> MINE_COMMAND_CENTER = MiningIndustry.registrate()
             .tileEntity("mine_command_center", MineCommandCenterBlockEntity::new)
-            .validBlocks(CmiBlocks.BLAZE_MINER_STATION)
+            .validBlocks(CmiBlocks.MINE_COMMAND_CENTER)
             .renderer(() -> MineCommandCenterRenderer::new)
             .register();
 

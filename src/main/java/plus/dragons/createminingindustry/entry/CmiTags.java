@@ -14,6 +14,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import plus.dragons.createminingindustry.MiningIndustry;
@@ -78,19 +79,25 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     }
     
     enum CmiBlockTags implements CmiTags<Block, RegistrateTagsProvider<Block>> {
-        BLAZE_MINE_SILK_TOUCH(true){
+        BLAZE_SILK_TOUCH(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 //pov.tag(tag).add();
             }
         },
-        BLAZE_MINE_RESOURCE_PACKAGE(true){
+        BLAZE_RESOURCE_PACKAGE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 //pov.tag(tag).add();
             }
         },
         BLAZE_BURN(true){
+            @Override
+            public void datagen(RegistrateTagsProvider<Block> pov) {
+                //pov.tag(tag).add();
+            }
+        },
+        BLAZE_IGNORE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 //pov.tag(tag).add();
@@ -155,7 +162,13 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     
     enum CmiFluidTags implements CmiTags<Fluid, RegistrateTagsProvider<Fluid>> {
         //No experience fluid tag here as different ratios is not acceptable
-        BLAZE_COLLECTABLE( false);
+        BLAZE_COLLECTABLE( false) {
+            @Override
+            public void datagen(RegistrateTagsProvider<Fluid> pov) {
+                // TODO If no use then delete it.
+                pov.tag(tag).add(Fluids.LAVA.getSource());
+            }
+        };
         
         final TagKey<Fluid> tag;
         final boolean datagen;

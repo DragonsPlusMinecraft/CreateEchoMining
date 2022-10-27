@@ -9,10 +9,10 @@ import net.minecraftforge.fluids.FluidStack;
 import plus.dragons.createminingindustry.MiningIndustry;
 
 
-public class ModLang {
+public class CmiLang {
 
     public static LangBuilder builder() {
-        return new ModLangBuilder(MiningIndustry.MOD_ID);
+        return new CmiLangBuilder(MiningIndustry.MOD_ID);
     }
 
 
