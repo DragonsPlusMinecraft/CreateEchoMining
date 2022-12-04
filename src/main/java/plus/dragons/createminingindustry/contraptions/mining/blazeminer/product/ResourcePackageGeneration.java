@@ -6,23 +6,15 @@ import com.google.common.cache.LoadingCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 
-@Mod.EventBusSubscriber()
-class ResourcePackageGeneration {
+public class ResourcePackageGeneration {
     private static final LoadingCache<Tile, TileWorleyNoisePointInfo> WORLEY_NOISE_TILE_POS_CACHE = CacheBuilder.newBuilder()
             .initialCapacity(10)
             .maximumSize(500)
@@ -47,18 +39,19 @@ class ResourcePackageGeneration {
                         }
                     });
 
-    private static final LoadingCache<Long, PackageDistribution> PACKAGE_DISTRIBUTION_INFO_CACHE = CacheBuilder.newBuilder()
+    private static final LoadingCache<Long, ResourcePackageDistribution> PACKAGE_DISTRIBUTION_INFO_CACHE = CacheBuilder.newBuilder()
             .initialCapacity(10)
             .maximumSize(500)
             .expireAfterAccess(5, TimeUnit.MINUTES)
             .build(
                     new CacheLoader<>() {
                         @Override
-                        public @NotNull PackageDistribution load(@NotNull Long packageSeed) {
+                        public @NotNull ResourcePackageDistribution load(@NotNull Long packageSeed) {
                             return computePackageDistribution(packageSeed);
                         }
                     });
 
+    @SuppressWarnings("all")
     public static List<Long> getAreaPackageSeeds(ServerLevel level, BlockPos blockPos) {
         var areaSeed = getAreaSeedForPos(level,blockPos);
         try{
@@ -69,13 +62,33 @@ class ResourcePackageGeneration {
         return null;
     }
 
-    public static PackageDistribution getPackageDistribution(long packageSeed) {
+    @SuppressWarnings("all")
+    public static ResourcePackageDistribution getPackageDistribution(long packageSeed) {
         try{
             return PACKAGE_DISTRIBUTION_INFO_CACHE.get(packageSeed);
         } catch(ExecutionException ignored){
             // I don't believe there'll be exception. it's impossible.
         }
         return null;
+    }
+
+    public static Map<Long,Integer> getPackages(ServerLevel level,BlockPos blockPos,Random random){
+        Map<Long,Integer> ret = new HashMap<>();
+        var packageSeeds = getAreaPackageSeeds(level,blockPos);
+        var y = blockPos.getY();
+        for(var p:packageSeeds){
+            var dist = getPackageDistribution(p);
+            if(dist.hasPackage(y)){
+                var count = dist.getCount(y);
+                int a = (int) Math.floor(count);
+                double b = count - a;
+                boolean c = random.nextDouble() < b;
+                if(a!=0||c){
+                    ret.put(p,c?a+1:a);
+                }
+            }
+        }
+        return ret;
     }
 
     private static long getAreaSeedForPos(ServerLevel level, BlockPos blockPos) {
@@ -94,17 +107,6 @@ class ResourcePackageGeneration {
             else return (int) Math.ceil(diff);
         }).get();
         return result.tileSeed;
-    }
-
-    // TODO test only
-    @SubscribeEvent
-    public static void testMethod(TickEvent.PlayerTickEvent event) {
-        /*if(!event.player.level.isClientSide() && event.phase == TickEvent.Phase.START && event.player.level.getDayTime() % 20 == 0){
-            var level = (ServerLevel) event.player.level;
-            var pos = event.player.blockPosition();
-            System.out.println("Area Seed: " + getAreaSeedForPos(level,pos) + ". This area has " + getAreaOreSeeds(level,pos).oreSeeds.size() + " kind of ore.");
-            System.out.println("Ore Seeds: " + getAreaOreSeeds(level,pos));
-        }*/
     }
 
     private static TileWorleyNoisePointInfo computeWorleyPosForTile(Tile tile){
@@ -128,19 +130,19 @@ class ResourcePackageGeneration {
         return ret;
     }
 
-    private static PackageDistribution computePackageDistribution(long packageSeed) {
+    private static ResourcePackageDistribution computePackageDistribution(long packageSeed) {
         var random = new Random(packageSeed);
         int peak = (int) (random.nextDouble() * 112 - 64);
         double co = 1 + random.nextDouble() * 9;
         int spread = (int) (random.nextDouble() * 36 + 12);
-        PackageHighAltitudeDistribution highAltitudeDistribution = null;
+        ResourcePackageDistribution.HighAltitude highAltitudeDistribution = null;
         if(peak+spread>=80){
             int spread2 = (int) (random.nextDouble() * 80 + 40);
             int dif = 80 - peak;
             double co2 = co / spread * (spread - dif);
-            highAltitudeDistribution = new PackageHighAltitudeDistribution(co2,spread2);
+            highAltitudeDistribution = new ResourcePackageDistribution.HighAltitude(co2,spread2);
         }
-        return new PackageDistribution(co,peak,spread,highAltitudeDistribution);
+        return new ResourcePackageDistribution(co,peak,spread,highAltitudeDistribution);
     }
 
     record XYChunk(int x, int y){
@@ -164,41 +166,6 @@ class ResourcePackageGeneration {
     }
 
     record TileWorleyNoisePointInfo(int x, int y, long tileSeed){ }
-
-    public record PackageDistribution(double countCoefficient, int maxCountInHeight, int spreadRange, @Nullable PackageHighAltitudeDistribution highAltitudeDistribution){
-        public boolean hasPackage(int y){
-            if(y<81)
-                return maxCountInHeight + spreadRange >= y && maxCountInHeight - spreadRange <= y;
-            else{
-                if(highAltitudeDistribution!=null){
-                    return y <= 80 + highAltitudeDistribution.spreadRange;
-                }
-                else return false;
-            }
-        }
-
-        public double getCount(int y){
-            if(y<81) {
-                int dif = Math.abs(maxCountInHeight - y);
-                return countCoefficient * (spreadRange - dif) / spreadRange;
-            }
-            else{
-                if(highAltitudeDistribution!=null){
-                    return highAltitudeDistribution.getCount(y);
-                }
-                else return 0;
-            }
-        }
-    }
-
-    public record PackageHighAltitudeDistribution(double countCoefficient, int spreadRange){
-        public double getCount(int y){
-            int dif = y - 80;
-            double ret = countCoefficient * (spreadRange - dif) / spreadRange;
-            return ret < 0? 0: ret;
-        }
-    }
-
 
 
 }

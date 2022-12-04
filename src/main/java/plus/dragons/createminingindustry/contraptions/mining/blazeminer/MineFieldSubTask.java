@@ -54,6 +54,7 @@ public class MineFieldSubTask {
         tag.put("duty",NBTHelper.writeAABB(dutyAABB));
         tag.put("target",NbtUtils.writeBlockPos(targetPos));
         tag.put("cached_area",cachedArea.serializeNBT());
+        tag.putBoolean("done",done);
         return tag;
     }
 
@@ -63,6 +64,7 @@ public class MineFieldSubTask {
         var pos = NbtUtils.readBlockPos((CompoundTag) nbt.get("target"));
         ret.targetPos = new BlockPos.MutableBlockPos(pos.getX(),pos.getY(),pos.getZ());
         ret.cachedArea = MineFieldTask.SubTaskArea.deserializeNBT((CompoundTag) nbt.get("cached_area"));
+        ret.done = nbt.getBoolean("done");
         return ret;
     }
 

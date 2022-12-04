@@ -13,8 +13,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import plus.dragons.createminingindustry.MiningIndustry;
@@ -82,25 +84,47 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
         BLAZE_SILK_TOUCH(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
-                //pov.tag(tag).add();
+                pov.tag(tag).addTag(Tags.Blocks.ORES);
+                pov.tag(tag).addTag(Tags.Blocks.GLASS);
+                pov.tag(tag).addTag(Tags.Blocks.GLASS_PANES);
             }
         },
         BLAZE_RESOURCE_PACKAGE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
-                //pov.tag(tag).add();
+                pov.tag(tag).addTag(BlockTags.BASE_STONE_OVERWORLD);
+                pov.tag(tag).addTag(BlockTags.BASE_STONE_NETHER);
+                pov.tag(tag).addTag(Tags.Blocks.STONE);
+                pov.tag(tag).addTag(Tags.Blocks.NETHERRACK);
+                pov.tag(tag).addTag(Tags.Blocks.END_STONES);
             }
         },
         BLAZE_BURN(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
-                //pov.tag(tag).add();
+                pov.tag(tag).addTag(BlockTags.ICE);
+                pov.tag(tag).addTag(BlockTags.REPLACEABLE_PLANTS);
+                pov.tag(tag).addTag(BlockTags.FLOWERS);
+                pov.tag(tag).addTag(BlockTags.CROPS);
+                pov.tag(tag).addTag(BlockTags.LEAVES);
+                pov.tag(tag).addTag(BlockTags.SAPLINGS);
+                pov.tag(tag).addTag(BlockTags.WOOL);
+                pov.tag(tag).addTag(BlockTags.CARPETS);
+                pov.tag(tag).addTag(BlockTags.PLANKS);
+                pov.tag(tag).addTag(BlockTags.WOODEN_FENCES);
+                pov.tag(tag).addTag(BlockTags.WOODEN_BUTTONS);
+                pov.tag(tag).addTag(BlockTags.WOODEN_DOORS);
+                pov.tag(tag).addTag(BlockTags.WOODEN_STAIRS);
+                pov.tag(tag).addTag(BlockTags.WOODEN_TRAPDOORS);
+                pov.tag(tag).addTag(BlockTags.WOODEN_PRESSURE_PLATES);
+                pov.tag(tag).addTag(BlockTags.SIGNS);
+                pov.tag(tag).addTag(BlockTags.LOGS);
             }
         },
         BLAZE_IGNORE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
-                //pov.tag(tag).add();
+                pov.tag(tag).add(Blocks.BEDROCK);
             }
         };
 
@@ -135,6 +159,12 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 // TODO If no use then delete it.
                 //pov.tag(tag).add(Items.EXPERIENCE_BOTTLE);
             }
+        },
+        RESOURCE_PACKAGE_ITEM(true){
+            @Override
+            public void datagen(RegistrateItemTagsProvider pov) {
+                //pov.tag(tag).addTag(Tags.Blocks.ORES);
+            }
         };
         
         final TagKey<Item> tag;
@@ -162,10 +192,15 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     
     enum CmiFluidTags implements CmiTags<Fluid, RegistrateTagsProvider<Fluid>> {
         //No experience fluid tag here as different ratios is not acceptable
-        BLAZE_COLLECTABLE( false) {
+        BLAZE_COLLECTIBLE( true) {
             @Override
             public void datagen(RegistrateTagsProvider<Fluid> pov) {
-                // TODO If no use then delete it.
+                pov.tag(tag).add(Fluids.LAVA.getSource());
+            }
+        },
+        RESOURCE_PACKAGE_FLUID( true) {
+            @Override
+            public void datagen(RegistrateTagsProvider<Fluid> pov) {
                 pov.tag(tag).add(Fluids.LAVA.getSource());
             }
         };

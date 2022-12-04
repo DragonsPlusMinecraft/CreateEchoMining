@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:ice",
+    "#minecraft:replaceable_plants",
+    "#minecraft:flowers",
+    "#minecraft:crops",
+    "#minecraft:leaves",
+    "#minecraft:saplings",
+    "#minecraft:wool",
+    "#minecraft:carpets",
+    "#minecraft:planks",
+    "#minecraft:wooden_fences",
+    "#minecraft:wooden_buttons",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_stairs",
+    "#minecraft:wooden_trapdoors",
+    "#minecraft:wooden_pressure_plates",
+    "#minecraft:signs",
+    "#minecraft:logs"
+  ]
+}

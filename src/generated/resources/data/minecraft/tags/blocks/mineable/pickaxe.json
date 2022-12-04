@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "create_mining_industry:blaze_miner_station",
+    "create_mining_industry:mine_command_center"
+  ]
+}

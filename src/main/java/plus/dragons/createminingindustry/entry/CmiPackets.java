@@ -11,18 +11,16 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import plus.dragons.createminingindustry.MiningIndustry;
-import plus.dragons.createminingindustry.contraptions.mining.ExamplePacket;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.ResourcePackageContentSyncPacket;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
-
 public enum CmiPackets {
 
-    // Client to Server
-    TODO(ExamplePacket.class, ExamplePacket::new, PLAY_TO_SERVER);
+    // Server to Client
+    RESOURCE_PACKAGE_CONTENT_SYNC(ResourcePackageContentSyncPacket.class, ResourcePackageContentSyncPacket::new, NetworkDirection.PLAY_TO_CLIENT);
 
     public static final ResourceLocation CHANNEL_NAME = MiningIndustry.genRL("main");
     public static final int NETWORK_VERSION = 1;

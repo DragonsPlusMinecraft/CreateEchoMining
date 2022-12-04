@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:ores",
+    "#forge:glass",
+    "#forge:glass_panes"
+  ]
+}

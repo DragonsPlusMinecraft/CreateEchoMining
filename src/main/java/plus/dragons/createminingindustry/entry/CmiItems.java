@@ -1,8 +1,10 @@
 package plus.dragons.createminingindustry.entry;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.world.item.Item;
 import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.MineLocatorBarItem;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.BlazeFluidHolderItem;
@@ -22,6 +24,10 @@ public class CmiItems {
             .properties(prop -> prop.stacksTo(1))
             .register();
 
+    public static final ItemEntry<Item> BLAZE_MINER_TOOLKIT = REGISTRATE.item("blaze_miner_toolkit", Item::new)
+            .properties(prop -> prop.stacksTo(1))
+            .register();
+
     public static final ItemEntry<BlazeFluidHolderItem> FLUID_HOLDER = REGISTRATE.item("blaze_fluid_holder", BlazeFluidHolderItem::new)
             .properties(prop -> prop.stacksTo(16))
             .register();
@@ -32,11 +38,11 @@ public class CmiItems {
 
     public static void fillCreateItemGroup(FillCreateItemGroupEvent event) {
         if (event.getItemGroup() == Create.BASE_CREATIVE_TAB) {
-            /*event.addInsertion(AllBlocks.ITEM_DRAIN.get(), ModBlocks.DISENCHANTER.asStack());
-            event.addInsertion(AllBlocks.SPOUT.get(), ModBlocks.COPIER.asStack());
-            event.addInsertion(AllBlocks.BLAZE_BURNER.get(), ENCHANTING_GUIDE.asStack());
-            event.addInsertion(AllFluids.CHOCOLATE.get().getBucket(), ModFluids.INK.get().getBucket().getDefaultInstance());
-            event.addInsertion(ModFluids.INK.get().getBucket(), HYPER_EXP_BOTTLE.asStack());*/
+            event.addInsertion(AllItems.WRENCH.get(), PORTABLE_DRILL.asStack());
+            event.addInsertion(AllItems.WRENCH.get(), MINE_LOCATOR_BAR.asStack());
+            event.addInsertion(AllItems.WRENCH.get(), BLAZE_MINER_TOOLKIT.asStack());
+            event.addInsertion(AllItems.WRENCH.get(), CmiBlocks.MINE_COMMAND_CENTER.asStack());
+            event.addInsertion(AllItems.WRENCH.get(), CmiBlocks.BLAZE_MINER_STATION.asStack());
         }
     }
     

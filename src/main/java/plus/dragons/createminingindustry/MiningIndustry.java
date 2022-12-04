@@ -14,6 +14,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.ResourcePackageContentGeneration;
 import plus.dragons.createminingindustry.entry.*;
 import plus.dragons.createminingindustry.foundation.data.advancement.ModAdvancements;
 import plus.dragons.createminingindustry.foundation.data.advancement.ModTriggers;
@@ -35,6 +36,8 @@ public class MiningIndustry {
         modEventBus.addListener(MiningIndustry::init);
         modEventBus.addListener(MiningIndustry::datagen);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MiningIndustryClient.onClient(modEventBus, forgeEventBus));
+        modEventBus.addListener(ResourcePackageContentGeneration::registerResourcePackage);
+        modEventBus.addListener(ResourcePackageContentGeneration::syncResourcePackageToClient);
     }
 
     private void initAllEntries() {
@@ -45,7 +48,6 @@ public class MiningIndustry {
         CmiFluids.register();
         CmiContainerTypes.register();
         CmiTags.register();
-
     }
     
     private void addForgeEventListeners(IEventBus forgeEventBus) {

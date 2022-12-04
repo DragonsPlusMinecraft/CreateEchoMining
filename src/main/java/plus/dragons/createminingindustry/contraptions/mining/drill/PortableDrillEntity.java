@@ -72,6 +72,7 @@ public class PortableDrillEntity extends Entity {
             if(!level.getFluidState(blockPos).isEmpty())
                 collapse();
             var others = level.getEntities(CmiEntityTypes.PORTABLE_DRILL.get(), this.getBoundingBox(), entity->true);
+            others.remove(this);
             if(!others.isEmpty()){
                 others.forEach(PortableDrillEntity::collapse);
                 this.collapse();
