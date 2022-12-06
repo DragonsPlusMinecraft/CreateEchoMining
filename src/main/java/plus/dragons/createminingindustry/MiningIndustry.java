@@ -65,7 +65,7 @@ public class MiningIndustry {
     }
 
     @SubscribeEvent
-    public static void setup(final FMLCommonSetupEvent event) {
+    public void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             // do not convert to lambda since there may be more
             CmiPackets.registerPackets();
