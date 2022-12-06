@@ -14,8 +14,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.entry.CmiItems;
-import plus.dragons.createminingindustry.foundation.utility.CmiLang;
 
 import java.util.List;
 
@@ -107,9 +107,9 @@ public class MineLocatorBarItem extends Item {
         // TODO add tutorial description & information
         var tag = pStack.getOrCreateTag();
         if(tag.contains("1st_location")){
-            pTooltipComponents.add(CmiLang.text("1st Pos"+ NbtUtils.readBlockPos((CompoundTag) tag.get("1st_location"))).component());
+            pTooltipComponents.add(MiningIndustry.LANG.text("1st Pos"+ NbtUtils.readBlockPos((CompoundTag) tag.get("1st_location"))).component());
             if(tag.contains("2nd_location")){
-                pTooltipComponents.add(CmiLang.text("2nd Pos"+NbtUtils.readBlockPos((CompoundTag) tag.get("2nd_location"))).component());
+                pTooltipComponents.add(MiningIndustry.LANG.text("2nd Pos"+NbtUtils.readBlockPos((CompoundTag) tag.get("2nd_location"))).component());
             }
         }
     }

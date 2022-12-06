@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
+import static plus.dragons.createminingindustry.MiningIndustry.REGISTRATE;
+
 public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     ITagManager<Block> BLOCK_TAGS = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags());
     ITagManager<Item> ITEM_TAGS = Objects.requireNonNull(ForgeRegistries.ITEMS.tags());
@@ -44,18 +46,6 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
         return enumName.replace('$', '/').toLowerCase(Locale.ROOT);
     }
     
-    static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> axeOrPickaxe() {
-        return b -> b.tag(BlockTags.MINEABLE_WITH_AXE).tag(BlockTags.MINEABLE_WITH_PICKAXE);
-    }
-    
-    static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> axeOnly() {
-        return b -> b.tag(BlockTags.MINEABLE_WITH_AXE);
-    }
-    
-    static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> pickaxeOnly() {
-        return b -> b.tag(BlockTags.MINEABLE_WITH_PICKAXE);
-    }
-    
     static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, ItemBuilder<BlockItem, BlockBuilder<T, P>>> tagBlockAndItem(String namespace, String... paths) {
         return block -> {
             ItemBuilder<BlockItem, BlockBuilder<T, P>> item = block.item();
@@ -68,16 +58,15 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     }
     
     static void register() {
-        CreateRegistrate registrate = MiningIndustry.registrate();
         Arrays.stream(CmiBlockTags.values())
             .filter(CmiTags::hasDatagen)
-            .forEach(tag -> registrate.addDataGenerator(ProviderType.BLOCK_TAGS, tag::datagen));
+            .forEach(tag -> REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, tag::datagen));
         Arrays.stream(CmiItemTags.values())
             .filter(CmiTags::hasDatagen)
-            .forEach(tag -> registrate.addDataGenerator(ProviderType.ITEM_TAGS, tag::datagen));
+            .forEach(tag -> REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, tag::datagen));
         Arrays.stream(CmiFluidTags.values())
             .filter(CmiTags::hasDatagen)
-            .forEach(tag -> registrate.addDataGenerator(ProviderType.FLUID_TAGS, tag::datagen));
+            .forEach(tag -> REGISTRATE.addDataGenerator(ProviderType.FLUID_TAGS, tag::datagen));
     }
     
     enum CmiBlockTags implements CmiTags<Block, RegistrateTagsProvider<Block>> {
@@ -109,7 +98,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 pov.tag(tag).addTag(BlockTags.LEAVES);
                 pov.tag(tag).addTag(BlockTags.SAPLINGS);
                 pov.tag(tag).addTag(BlockTags.WOOL);
-                pov.tag(tag).addTag(BlockTags.CARPETS);
+                pov.tag(tag).addTag(BlockTags.WOOL_CARPETS);
                 pov.tag(tag).addTag(BlockTags.PLANKS);
                 pov.tag(tag).addTag(BlockTags.WOODEN_FENCES);
                 pov.tag(tag).addTag(BlockTags.WOODEN_BUTTONS);
@@ -138,7 +127,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
         }
         
         CmiBlockTags(boolean datagen) {
-            this(MiningIndustry.MOD_ID, datagen);
+            this(MiningIndustry.ID, datagen);
         }
     
         @Override
@@ -176,7 +165,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
         }
     
         CmiItemTags(boolean datagen) {
-            this(MiningIndustry.MOD_ID, datagen);
+            this(MiningIndustry.ID, datagen);
         }
     
         @Override
@@ -214,7 +203,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
         }
     
         CmiFluidTags(boolean datagen) {
-            this(MiningIndustry.MOD_ID, datagen);
+            this(MiningIndustry.ID, datagen);
         }
     
         @Override

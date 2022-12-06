@@ -1,78 +1,78 @@
 package plus.dragons.createminingindustry;
 
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import plus.dragons.createdragonlib.init.SafeRegistrate;
+import plus.dragons.createdragonlib.lang.Lang;
+import plus.dragons.createdragonlib.lang.LangFactory;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.ResourcePackageContentGeneration;
 import plus.dragons.createminingindustry.entry.*;
-import plus.dragons.createminingindustry.foundation.data.advancement.ModAdvancements;
-import plus.dragons.createminingindustry.foundation.data.advancement.ModTriggers;
-import plus.dragons.createminingindustry.foundation.data.lang.LangMerger;
+import plus.dragons.createminingindustry.foundation.ponder.content.CmiPonderIndex;
 
-@Mod(MiningIndustry.MOD_ID)
+@Mod(MiningIndustry.ID)
 public class MiningIndustry {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "create_mining_industry";
-    private static final NonNullSupplier<CreateRegistrate> REGISTRATE = CreateRegistrate.lazy(MOD_ID);
+
+    public static final String NAME = "Create: Mining Industry";
+    public static final String ID = "create_mining_industry";
+    public static final SafeRegistrate REGISTRATE = new SafeRegistrate(ID);
+    public static final Lang LANG = new Lang(ID);
+
+    private static final LangFactory LANG_FACTORY = LangFactory.create(NAME, ID)
+            .ponders(() -> {
+                CmiPonderIndex.register();
+                CmiPonderIndex.registerTags();
+            })
+            .tooltips()
+            .ui();
+
 
     public MiningIndustry() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-        initAllEntries();
-
-        addForgeEventListeners(forgeEventBus);
-        modEventBus.addListener(MiningIndustry::init);
-        modEventBus.addListener(MiningIndustry::datagen);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MiningIndustryClient.onClient(modEventBus, forgeEventBus));
+        registerEntries(modEventBus);
+        modEventBus.register(this);
+        modEventBus.addListener(EventPriority.LOWEST, LANG_FACTORY::datagen);
         modEventBus.addListener(ResourcePackageContentGeneration::registerResourcePackage);
-        modEventBus.addListener(ResourcePackageContentGeneration::syncResourcePackageToClient);
+        registerForgeEvents(forgeEventBus);
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> MiningIndustryClient::new);
     }
 
-    private void initAllEntries() {
+    private void registerEntries(IEventBus modEventBus) {
         CmiItems.register();
         CmiBlocks.register();
         CmiBlockEntities.register();
         CmiEntityTypes.register();
-        CmiFluids.register();
-        CmiContainerTypes.register();
         CmiTags.register();
+        REGISTRATE.registerEventListeners(modEventBus);
     }
     
-    private void addForgeEventListeners(IEventBus forgeEventBus) {
+    private void registerForgeEvents(IEventBus forgeEventBus) {
         forgeEventBus.addListener(CmiItems::fillCreateItemGroup);
+        forgeEventBus.addListener(ResourcePackageContentGeneration::syncResourcePackageToClient);
     }
 
-    public static void init(final FMLCommonSetupEvent event) {
+    @SubscribeEvent
+    public static void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            // do not convert to lambda since there may be more
             CmiPackets.registerPackets();
-            ModAdvancements.register();
-            ModTriggers.register();
         });
-    }
-    
-    public static void datagen(final GatherDataEvent event) {
-        DataGenerator datagen = event.getGenerator();
-        datagen.addProvider(new LangMerger(datagen));
-        datagen.addProvider(new ModAdvancements(datagen));
     }
 
     public static ResourceLocation genRL(String name) {
-        return new ResourceLocation(MOD_ID, name);
-    }
-
-    public static CreateRegistrate registrate() {
-        return REGISTRATE.get();
+        return new ResourceLocation(ID, name);
     }
 }

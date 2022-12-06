@@ -27,7 +27,7 @@ public enum CmiPackets {
     public static final String NETWORK_VERSION_STR = String.valueOf(NETWORK_VERSION);
     public static SimpleChannel channel;
 
-    private LoadedPacket<?> packet;
+    private CmiPackets.LoadedPacket<?> packet;
 
     <T extends SimplePacketBase> CmiPackets(Class<T> type, Function<FriendlyByteBuf, T> factory,
                                             NetworkDirection direction) {
@@ -71,7 +71,7 @@ public enum CmiPackets {
             channel.messageBuilder(type, index++, direction)
                     .encoder(encoder)
                     .decoder(decoder)
-                    .consumer(handler)
+                    .consumerNetworkThread(handler)
                     .add();
         }
     }

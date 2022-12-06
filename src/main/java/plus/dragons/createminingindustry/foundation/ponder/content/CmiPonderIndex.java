@@ -4,7 +4,7 @@ import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 import plus.dragons.createminingindustry.MiningIndustry;
 
 public class CmiPonderIndex {
-    static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(MiningIndustry.MOD_ID);
+    static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(MiningIndustry.ID);
 
     public static void register() {
         //HELPER.forComponents(ModBlocks.DISENCHANTER)

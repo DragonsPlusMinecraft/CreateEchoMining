@@ -9,8 +9,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.entry.CmiItems;
-import plus.dragons.createminingindustry.foundation.utility.CmiLang;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class BlazeFluidHolderItem extends Item {
 
     public static ItemStack ofFluid(Fluid fluid){
         var ret = CmiItems.FLUID_HOLDER.asStack();
-        ret.getOrCreateTag().putString("fluid",fluid.getRegistryName().toString());
+        ret.getOrCreateTag().putString("fluid",fluid.getFluidType().toString());
         return ret;
     }
 
@@ -30,7 +30,7 @@ public class BlazeFluidHolderItem extends Item {
         // TODO show fluid inside
         var tag = pStack.getOrCreateTag();
         if(tag.contains("fluid")){
-            pTooltipComponents.add(CmiLang.text("1st Pos"+ tag.getString("fluid")).component());
+            pTooltipComponents.add(MiningIndustry.LANG.text("1st Pos"+ tag.getString("fluid")).component());
         }
     }
 }

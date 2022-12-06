@@ -6,8 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.entry.CmiItems;
-import plus.dragons.createminingindustry.foundation.utility.CmiLang;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class BlazeResourcePackageItem extends Item {
         // TODO show package info
         var tag = pStack.getOrCreateTag();
         if(tag.contains("seed")){
-            pTooltipComponents.add(CmiLang.text("Seed:"+ tag.getLong("seed")).component());
+            pTooltipComponents.add(MiningIndustry.LANG.text("Seed:"+ tag.getLong("seed")).component());
         }
     }
 }

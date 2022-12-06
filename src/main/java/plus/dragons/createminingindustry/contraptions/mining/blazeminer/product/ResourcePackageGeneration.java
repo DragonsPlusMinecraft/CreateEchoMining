@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
@@ -72,7 +73,7 @@ public class ResourcePackageGeneration {
         return null;
     }
 
-    public static Map<Long,Integer> getPackages(ServerLevel level,BlockPos blockPos,Random random){
+    public static Map<Long,Integer> getPackages(ServerLevel level, BlockPos blockPos, RandomSource random){
         Map<Long,Integer> ret = new HashMap<>();
         var packageSeeds = getAreaPackageSeeds(level,blockPos);
         var y = blockPos.getY();
@@ -92,7 +93,7 @@ public class ResourcePackageGeneration {
     }
 
     private static long getAreaSeedForPos(ServerLevel level, BlockPos blockPos) {
-        var tiles = Tile.all9(Tile.of(level.dimension().getRegistryName(), level.getSeed(), XYChunk.ofPos(blockPos)));
+        var tiles = Tile.all9(Tile.of(level.dimension().registry(), level.getSeed(), XYChunk.ofPos(blockPos)));
         var pointInfos = new ArrayList<TileWorleyNoisePointInfo>();
         try{
             for(var tile:tiles){

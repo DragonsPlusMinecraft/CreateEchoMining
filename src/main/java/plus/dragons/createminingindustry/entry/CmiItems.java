@@ -2,23 +2,30 @@ package plus.dragons.createminingindustry.entry;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.content.AllSections;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
-import plus.dragons.createminingindustry.MiningIndustry;
+import plus.dragons.createdragonlib.init.FillCreateItemGroupEvent;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.MineLocatorBarItem;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.BlazeFluidHolderItem;
 import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.BlazeResourcePackageItem;
 import plus.dragons.createminingindustry.contraptions.mining.drill.PortableDrillItem;
-import plus.dragons.createminingindustry.event.FillCreateItemGroupEvent;
+
+import static plus.dragons.createminingindustry.MiningIndustry.REGISTRATE;
 
 public class CmiItems {
 
-    private static final CreateRegistrate REGISTRATE = MiningIndustry.registrate();
+    static {
+        REGISTRATE.creativeModeTab(() -> Create.BASE_CREATIVE_TAB).startSection(AllSections.KINETICS);
+    }
 
     public static final ItemEntry<PortableDrillItem> PORTABLE_DRILL = REGISTRATE.item("portable_one_time_drill", PortableDrillItem::new)
             .properties(prop -> prop.stacksTo(16))
             .register();
+
+    static {
+        REGISTRATE.startSection(AllSections.MATERIALS);
+    }
 
     public static final ItemEntry<MineLocatorBarItem> MINE_LOCATOR_BAR = REGISTRATE.item("mine_locator_bar", MineLocatorBarItem::new)
             .properties(prop -> prop.stacksTo(1))

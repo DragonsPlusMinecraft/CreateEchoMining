@@ -16,8 +16,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
+import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.entry.CmiItems;
-import plus.dragons.createminingindustry.foundation.utility.CmiLang;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -111,7 +111,7 @@ public class MineCommandCenterBlockEntity extends SmartTileEntity implements IHa
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         // TODO show mine field config and running status
         if(mineFieldTask!=null){
-            tooltip.add(CmiLang.text(mineFieldTask.toString()).component());
+            tooltip.add(MiningIndustry.LANG.text(mineFieldTask.toString()).component());
             return true;
         } else
             return false;
