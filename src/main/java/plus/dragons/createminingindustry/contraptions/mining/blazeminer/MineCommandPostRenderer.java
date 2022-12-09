@@ -3,10 +3,10 @@ package plus.dragons.createminingindustry.contraptions.mining.blazeminer;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-public class MineCommandCenterRenderer extends SmartTileEntityRenderer<MineCommandCenterBlockEntity> {
+public class MineCommandPostRenderer extends SmartTileEntityRenderer<MineCommandPostBlockEntity> {
 
     // Heavily TODO
-    public MineCommandCenterRenderer(BlockEntityRendererProvider.Context context) {
+    public MineCommandPostRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 }

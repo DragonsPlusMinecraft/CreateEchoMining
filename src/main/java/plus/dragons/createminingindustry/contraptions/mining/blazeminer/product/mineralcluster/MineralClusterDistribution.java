@@ -1,9 +1,9 @@
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product;
+package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.mineralcluster;
 
 import org.jetbrains.annotations.Nullable;
 
-public record ResourcePackageDistribution(double countCoefficient, int maxCountInHeight, int spreadRange,
-                                          @Nullable ResourcePackageDistribution.HighAltitude highAltitudeDistribution) {
+public record MineralClusterDistribution(double countCoefficient, int maxCountInHeight, int spreadRange,
+                                         @Nullable MineralClusterDistribution.HighAltitude highAltitudeDistribution) {
     public boolean hasPackage(int y) {
         if (y < 81)
             return maxCountInHeight + spreadRange >= y && maxCountInHeight - spreadRange <= y;

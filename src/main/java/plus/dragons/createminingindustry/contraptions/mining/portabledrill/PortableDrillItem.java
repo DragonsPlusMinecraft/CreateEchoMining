@@ -1,4 +1,4 @@
-package plus.dragons.createminingindustry.contraptions.mining.drill;
+package plus.dragons.createminingindustry.contraptions.mining.portabledrill;
 
 
 import net.minecraft.world.InteractionResult;

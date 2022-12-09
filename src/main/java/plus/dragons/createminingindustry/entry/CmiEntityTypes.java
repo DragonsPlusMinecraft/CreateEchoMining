@@ -1,18 +1,11 @@
 package plus.dragons.createminingindustry.entry;
 
-import com.simibubi.create.foundation.data.CreateEntityBuilder;
-import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.util.entry.EntityEntry;
-import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import plus.dragons.createminingindustry.MiningIndustry;
-import plus.dragons.createminingindustry.contraptions.mining.drill.PortableDrillEntity;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.BlazeMinerEntity;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.BlazeMinerRenderer;
+import plus.dragons.createminingindustry.contraptions.mining.portabledrill.PortableDrillEntity;
 
 import static plus.dragons.createminingindustry.MiningIndustry.REGISTRATE;
 
@@ -26,6 +19,18 @@ public class CmiEntityTypes {
             PortableDrillEntity::build
     ).register();
 
+    public static final EntityEntry<BlazeMinerEntity> BLAZE_MINER = REGISTRATE.entity("blaze_miner",
+            BlazeMinerEntity::new,
+            () -> BlazeMinerRenderer::new,
+            MobCategory.CREATURE,
+            8, 3, false, true,
+            BlazeMinerEntity::build
+    ).register();
+
 
     public static void register() {}
+
+    public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(BLAZE_MINER.get(), BlazeMinerEntity.createAttributes().build());
+    }
 }

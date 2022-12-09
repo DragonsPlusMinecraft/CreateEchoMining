@@ -1,4 +1,4 @@
-package plus.dragons.createminingindustry.contraptions.mining.drill;
+package plus.dragons.createminingindustry.contraptions.mining.portabledrill;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.BlockHelper;

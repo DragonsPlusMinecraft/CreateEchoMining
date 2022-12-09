@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import plus.dragons.createdragonlib.init.SafeRegistrate;
 import plus.dragons.createdragonlib.lang.Lang;
 import plus.dragons.createdragonlib.lang.LangFactory;
-import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.ResourcePackageContentGeneration;
+import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.mineralcluster.MineralClusterContentGeneration;
 import plus.dragons.createminingindustry.entry.*;
 import plus.dragons.createminingindustry.foundation.ponder.content.CmiPonderIndex;
 
@@ -44,7 +44,8 @@ public class MiningIndustry {
         registerEntries(modEventBus);
         modEventBus.register(this);
         modEventBus.addListener(EventPriority.LOWEST, LANG_FACTORY::datagen);
-        modEventBus.addListener(ResourcePackageContentGeneration::registerResourcePackage);
+        modEventBus.addListener(MineralClusterContentGeneration::registerResourcePackage);
+        modEventBus.addListener(CmiEntityTypes::registerEntityAttributes);
         registerForgeEvents(forgeEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> MiningIndustryClient::new);
@@ -61,7 +62,7 @@ public class MiningIndustry {
     
     private void registerForgeEvents(IEventBus forgeEventBus) {
         forgeEventBus.addListener(CmiItems::fillCreateItemGroup);
-        forgeEventBus.addListener(ResourcePackageContentGeneration::syncResourcePackageToClient);
+        forgeEventBus.addListener(MineralClusterContentGeneration::syncResourcePackageToClient);
     }
 
     @SubscribeEvent

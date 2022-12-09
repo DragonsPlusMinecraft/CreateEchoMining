@@ -1,6 +1,5 @@
 package plus.dragons.createminingindustry.entry;
 
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.ProviderType;
@@ -70,7 +69,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     }
     
     enum CmiBlockTags implements CmiTags<Block, RegistrateTagsProvider<Block>> {
-        BLAZE_SILK_TOUCH(true){
+        BLAZE_MINER_SILK_TOUCH(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).addTag(Tags.Blocks.ORES);
@@ -78,7 +77,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 pov.tag(tag).addTag(Tags.Blocks.GLASS_PANES);
             }
         },
-        BLAZE_RESOURCE_PACKAGE(true){
+        BLAZE_MINER_MINERAL_CLUSRER(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).addTag(BlockTags.BASE_STONE_OVERWORLD);
@@ -88,7 +87,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 pov.tag(tag).addTag(Tags.Blocks.END_STONES);
             }
         },
-        BLAZE_BURN(true){
+        BLAZE_MINER_BURN(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).addTag(BlockTags.ICE);
@@ -110,7 +109,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 pov.tag(tag).addTag(BlockTags.LOGS);
             }
         },
-        BLAZE_IGNORE(true){
+        BLAZE_MINER_IGNORE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).add(Blocks.BEDROCK);
@@ -148,12 +147,6 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 // TODO If no use then delete it.
                 //pov.tag(tag).add(Items.EXPERIENCE_BOTTLE);
             }
-        },
-        RESOURCE_PACKAGE_ITEM(true){
-            @Override
-            public void datagen(RegistrateItemTagsProvider pov) {
-                //pov.tag(tag).addTag(Tags.Blocks.ORES);
-            }
         };
         
         final TagKey<Item> tag;
@@ -181,13 +174,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     
     enum CmiFluidTags implements CmiTags<Fluid, RegistrateTagsProvider<Fluid>> {
         //No experience fluid tag here as different ratios is not acceptable
-        BLAZE_COLLECTIBLE( true) {
-            @Override
-            public void datagen(RegistrateTagsProvider<Fluid> pov) {
-                pov.tag(tag).add(Fluids.LAVA.getSource());
-            }
-        },
-        RESOURCE_PACKAGE_FLUID( true) {
+        BLAZE_MINER_COLLECTIBLE_LIQUID( true) {
             @Override
             public void datagen(RegistrateTagsProvider<Fluid> pov) {
                 pov.tag(tag).add(Fluids.LAVA.getSource());

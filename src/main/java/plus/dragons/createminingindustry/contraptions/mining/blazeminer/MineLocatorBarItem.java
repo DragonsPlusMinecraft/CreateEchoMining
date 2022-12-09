@@ -32,7 +32,7 @@ public class MineLocatorBarItem extends Item {
         var pos = pContext.getClickedPos();
         var itemStack = player.getItemInHand(hand);
         var tag = itemStack.getOrCreateTag();
-        if(level.getBlockEntity(pos) instanceof MineCommandCenterBlockEntity mineCommandCenterBlockEntity){
+        if(level.getBlockEntity(pos) instanceof MineCommandPostBlockEntity mineCommandPostBlockEntity){
             var posTag1 =  tag.get("1st_location");
             var posTag2 =  tag.get("2nd_location");
             if(posTag1!=null&&posTag2!=null){
@@ -51,7 +51,7 @@ public class MineLocatorBarItem extends Item {
                         var xw = x2 - x1 + 1;
                         var zw = z2 - z1 + 1;
                         var newField = new MineFieldTask(x1,z1,xw,zw);
-                        var returned = mineCommandCenterBlockEntity.setupMineField(newField);
+                        var returned = mineCommandPostBlockEntity.setupMineField(newField);
                         if(!player.getAbilities().instabuild) itemStack.shrink(1);
                         if(returned!=null){
                             var bPos1 = new BlockPos(returned.x,0,returned.z);

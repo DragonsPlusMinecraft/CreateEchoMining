@@ -1,37 +1,34 @@
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product;
+package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.fluidpackage;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createminingindustry.MiningIndustry;
 import plus.dragons.createminingindustry.entry.CmiItems;
 
 import java.util.List;
 
-public class BlazeResourcePackageItem extends Item {
-    public BlazeResourcePackageItem(Properties pProperties) {
+public class BlazeFluidContainerItem extends Item {
+    public BlazeFluidContainerItem(Properties pProperties) {
         super(pProperties);
     }
 
-    public static ItemStack ofSeed(long seed, int count){
-        var ret = CmiItems.RESOURCE_PACKAGE.asStack(count);
-        ret.getOrCreateTag().putLong("seed",seed);
+    public static ItemStack ofFluid(Fluid fluid){
+        var ret = CmiItems.BLAZE_FLUID_CONTAINER.asStack();
+        ret.getOrCreateTag().putString("fluid",fluid.getFluidType().toString());
         return ret;
-    }
-
-    public static ItemStack ofSeed(long seed){
-        return ofSeed(seed,1);
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        // TODO show package info
+        // TODO show fluid inside
         var tag = pStack.getOrCreateTag();
-        if(tag.contains("seed")){
-            pTooltipComponents.add(MiningIndustry.LANG.text("Seed:"+ tag.getLong("seed")).component());
+        if(tag.contains("fluid")){
+            pTooltipComponents.add(MiningIndustry.LANG.text("1st Pos"+ tag.getString("fluid")).component());
         }
     }
 }

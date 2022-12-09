@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product;
+package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.mineralcluster;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 
