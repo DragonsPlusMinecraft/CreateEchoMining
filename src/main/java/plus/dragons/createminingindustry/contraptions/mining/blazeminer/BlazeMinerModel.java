@@ -1,4 +1,4 @@
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product;
+package plus.dragons.createminingindustry.contraptions.mining.blazeminer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
