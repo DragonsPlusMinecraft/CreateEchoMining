@@ -1,4 +1,4 @@
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.mineralcluster;
+package plus.dragons.createminingindustry.contraptions.mining.minefield;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -28,7 +28,7 @@ public class MineralClusterDistributionGeneration {
                         }
                     });
 
-    private static final LoadingCache<Long, List<Long>> MINERAL_CLUSTER_SEEDS_CACHE = CacheBuilder.newBuilder()
+    private static final LoadingCache<Long, List<Long>> MINERAL_SEEDS_CACHE = CacheBuilder.newBuilder()
             .initialCapacity(10)
             .maximumSize(500)
             .expireAfterAccess(5, TimeUnit.MINUTES)
@@ -36,27 +36,27 @@ public class MineralClusterDistributionGeneration {
                     new CacheLoader<>() {
                         @Override
                         public @NotNull List<Long> load(@NotNull Long areaSeed) {
-                            return computeMineralClusterSeed(areaSeed);
+                            return computeMineralSeed(areaSeed);
                         }
                     });
 
-    private static final LoadingCache<Long, MineralClusterDistribution> MINERAL_CLUSTER_DISTRIBUTION_CACHE = CacheBuilder.newBuilder()
+    private static final LoadingCache<Long, MineralDistribution> MINERAL_DISTRIBUTION_CACHE = CacheBuilder.newBuilder()
             .initialCapacity(10)
             .maximumSize(500)
             .expireAfterAccess(5, TimeUnit.MINUTES)
             .build(
                     new CacheLoader<>() {
                         @Override
-                        public @NotNull MineralClusterDistribution load(@NotNull Long clusterSeed) {
-                            return computeMineralClusterDistribution(clusterSeed);
+                        public @NotNull MineralDistribution load(@NotNull Long mineralSeed) {
+                            return computeDistribution(mineralSeed);
                         }
                     });
 
     @SuppressWarnings("all")
-    public static List<Long> getSeedsOfAllMineralCluster(ServerLevel level, BlockPos blockPos) {
-        var areaSeed = getAreaSeedForPos(level,blockPos);
+    public static List<Long> getMineralSeeds(ServerLevel level, BlockPos blockPos) {
+        var areaSeed = computeAreaSeedForPos(level,blockPos);
         try{
-            return MINERAL_CLUSTER_SEEDS_CACHE.get(areaSeed);
+            return MINERAL_SEEDS_CACHE.get(areaSeed);
         } catch(ExecutionException ignored){
             // I don't believe there'll be exception. it's impossible.
         }
@@ -64,9 +64,9 @@ public class MineralClusterDistributionGeneration {
     }
 
     @SuppressWarnings("all")
-    public static MineralClusterDistribution getMineralClusterDistribution(long packageSeed) {
+    public static MineralDistribution getDistribution(long mineralSeed) {
         try{
-            return MINERAL_CLUSTER_DISTRIBUTION_CACHE.get(packageSeed);
+            return MINERAL_DISTRIBUTION_CACHE.get(mineralSeed);
         } catch(ExecutionException ignored){
             // I don't believe there'll be exception. it's impossible.
         }
@@ -75,10 +75,10 @@ public class MineralClusterDistributionGeneration {
 
     public static Map<Long,Integer> genAmountsOfAllMineralCluster(ServerLevel level, BlockPos blockPos, RandomSource random){
         Map<Long,Integer> ret = new HashMap<>();
-        var packageSeeds = getSeedsOfAllMineralCluster(level,blockPos);
+        var packageSeeds = getMineralSeeds(level,blockPos);
         var y = blockPos.getY();
         for(var p:packageSeeds){
-            var dist = getMineralClusterDistribution(p);
+            var dist = getDistribution(p);
             if(dist.hasPackage(y)){
                 var count = dist.getCount(y);
                 int a = (int) Math.floor(count);
@@ -92,7 +92,7 @@ public class MineralClusterDistributionGeneration {
         return ret;
     }
 
-    private static long getAreaSeedForPos(ServerLevel level, BlockPos blockPos) {
+    private static long computeAreaSeedForPos(ServerLevel level, BlockPos blockPos) {
         var tiles = Tile.all9(Tile.of(level.dimension().registry(), level.getSeed(), XYChunk.ofPos(blockPos)));
         var pointInfos = new ArrayList<TileWorleyNoisePointInfo>();
         try{
@@ -119,7 +119,7 @@ public class MineralClusterDistributionGeneration {
         return new TileWorleyNoisePointInfo(x,y,longSeed);
     }
 
-    private static List<Long> computeMineralClusterSeed(long areaSeed) {
+    private static List<Long> computeMineralSeed(long areaSeed) {
         var random = new Random(areaSeed);
         var count =  (int) Math.floor(Math.abs(random.nextGaussian(0,3))) + 1;
         var ret = new ArrayList<Long>();
@@ -131,19 +131,19 @@ public class MineralClusterDistributionGeneration {
         return ret;
     }
 
-    private static MineralClusterDistribution computeMineralClusterDistribution(long clusterSeed) {
-        var random = new Random(clusterSeed);
+    private static MineralDistribution computeDistribution(long mineralSeed) {
+        var random = new Random(mineralSeed);
         int peak = (int) (random.nextDouble() * 112 - 64);
         double co = 1 + random.nextDouble() * 9;
         int spread = (int) (random.nextDouble() * 36 + 12);
-        MineralClusterDistribution.HighAltitude highAltitudeDistribution = null;
+        MineralDistribution.InYMoreThan80 InYMoreThan80Distribution = null;
         if(peak+spread>=80){
             int spread2 = (int) (random.nextDouble() * 80 + 40);
             int dif = 80 - peak;
             double co2 = co / spread * (spread - dif);
-            highAltitudeDistribution = new MineralClusterDistribution.HighAltitude(co2,spread2);
+            InYMoreThan80Distribution = new MineralDistribution.InYMoreThan80(co2,spread2);
         }
-        return new MineralClusterDistribution(co,peak,spread,highAltitudeDistribution);
+        return new MineralDistribution(co,peak,spread, InYMoreThan80Distribution);
     }
 
     record XYChunk(int x, int y){

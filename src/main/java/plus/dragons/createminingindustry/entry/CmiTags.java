@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import plus.dragons.createminingindustry.MiningIndustry;
@@ -69,25 +68,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     }
     
     enum CmiBlockTags implements CmiTags<Block, RegistrateTagsProvider<Block>> {
-        BLAZE_MINER_SILK_TOUCH(true){
-            @Override
-            public void datagen(RegistrateTagsProvider<Block> pov) {
-                pov.tag(tag).addTag(Tags.Blocks.ORES);
-                pov.tag(tag).addTag(Tags.Blocks.GLASS);
-                pov.tag(tag).addTag(Tags.Blocks.GLASS_PANES);
-            }
-        },
-        BLAZE_MINER_MINERAL_CLUSRER(true){
-            @Override
-            public void datagen(RegistrateTagsProvider<Block> pov) {
-                pov.tag(tag).addTag(BlockTags.BASE_STONE_OVERWORLD);
-                pov.tag(tag).addTag(BlockTags.BASE_STONE_NETHER);
-                pov.tag(tag).addTag(Tags.Blocks.STONE);
-                pov.tag(tag).addTag(Tags.Blocks.NETHERRACK);
-                pov.tag(tag).addTag(Tags.Blocks.END_STONES);
-            }
-        },
-        BLAZE_MINER_BURN(true){
+        MINER_DESTROY(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).addTag(BlockTags.ICE);
@@ -109,7 +90,7 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
                 pov.tag(tag).addTag(BlockTags.LOGS);
             }
         },
-        BLAZE_MINER_IGNORE(true){
+        MINER_IGNORE(true){
             @Override
             public void datagen(RegistrateTagsProvider<Block> pov) {
                 pov.tag(tag).add(Blocks.BEDROCK);
@@ -173,11 +154,10 @@ public interface CmiTags<T, P extends RegistrateTagsProvider<T>> {
     }
     
     enum CmiFluidTags implements CmiTags<Fluid, RegistrateTagsProvider<Fluid>> {
-        //No experience fluid tag here as different ratios is not acceptable
-        BLAZE_MINER_COLLECTIBLE_LIQUID( true) {
+        MINER_VAPORIZE( true) {
             @Override
             public void datagen(RegistrateTagsProvider<Fluid> pov) {
-                pov.tag(tag).add(Fluids.LAVA.getSource());
+                pov.tag(tag).add(Fluids.WATER);
             }
         };
         

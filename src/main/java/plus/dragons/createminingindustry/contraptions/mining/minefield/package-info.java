@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.fluidpackage;
+package plus.dragons.createminingindustry.contraptions.mining.minefield;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

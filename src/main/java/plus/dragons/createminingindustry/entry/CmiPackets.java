@@ -11,7 +11,6 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import plus.dragons.createminingindustry.MiningIndustry;
-import plus.dragons.createminingindustry.contraptions.mining.blazeminer.product.mineralcluster.MineralClusterContentSyncPacket;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -20,8 +19,8 @@ import java.util.function.Supplier;
 public enum CmiPackets {
 
     // Server to Client
-    RESOURCE_PACKAGE_CONTENT_SYNC(MineralClusterContentSyncPacket.class, MineralClusterContentSyncPacket::new, NetworkDirection.PLAY_TO_CLIENT);
-
+    // RESOURCE_PACKAGE_CONTENT_SYNC(MineralClusterContentSyncPacket.class, MineralClusterContentSyncPacket::new, NetworkDirection.PLAY_TO_CLIENT);
+;
     public static final ResourceLocation CHANNEL_NAME = MiningIndustry.genRL("main");
     public static final int NETWORK_VERSION = 1;
     public static final String NETWORK_VERSION_STR = String.valueOf(NETWORK_VERSION);
