@@ -31,4 +31,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'CreateMiningIndustry'
+rootProject.name = 'CreateEchoMining'

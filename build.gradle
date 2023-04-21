@@ -8,8 +8,8 @@ plugins {
 }
 
 version = mod_version
-group = 'plus.dragons.createminingindustry' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "create_mining_industry-${artifact_minecraft_version}-for-create-${create_version}}"
+group = 'plus.dragons.createechomining' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "create_echo_mining-${artifact_minecraft_version}-for-create-${create_version}}"
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -22,16 +22,16 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
-            arg '-mixin.config=create_mining_industry.mixins.json'
+            arg '-mixin.config=create_echo_mining.mixins.json'
 
             property 'forge.logging.markers', 'REGISTRIES'
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'create_mining_industry'
+            property 'forge.enabledGameTestNamespaces', 'create_echo_mining'
 
             mods {
-                create_mining_industry {
+                create_echo_mining {
                     source sourceSets.main
                 }
             }
@@ -40,16 +40,16 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-            arg '-mixin.config=create_mining_industry.mixins.json'
+            arg '-mixin.config=create_echo_mining.mixins.json'
 
             property 'forge.logging.markers', 'REGISTRIES'
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'create_mining_industry'
+            property 'forge.enabledGameTestNamespaces', 'create_echo_mining'
 
             mods {
-                create_mining_industry {
+                create_echo_mining {
                     source sourceSets.main
                 }
             }
@@ -63,13 +63,13 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'create_mining_industry',
+            args '--mod', 'create_echo_mining',
                     '--all', '--output', file('src/generated/resources/'),
                     '--existing', file('src/main/resources/'),
                     '--existing-mod', 'create'
 
             mods {
-                create_mining_industry {
+                create_echo_mining {
                     source sourceSets.main
                 }
             }
@@ -130,8 +130,8 @@ dependencies {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, 'create_mining_industry.refmap.json'
-    config 'create_mining_industry.mixins.json'
+    add sourceSets.main, 'create_echo_mining.refmap.json'
+    config 'create_echo_mining.mixins.json'
 
     debug.verbose = true
     debug.export = true
@@ -141,14 +141,14 @@ jar {
     classifier = 'slim'
     manifest {
         attributes([
-                "Specification-Title"     : "create_mining_industry",
+                "Specification-Title"     : "create_echo_mining",
                 "Specification-Vendor"    : "dragonsplus",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "dragonsplus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'MixinConfigs': 'create_mining_industry.mixins.json'
+                'MixinConfigs': 'create_echo_mining.mixins.json'
         ])
     }
 }

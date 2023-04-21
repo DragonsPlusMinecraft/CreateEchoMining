@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "create_mining_industry resources",
+        "description": "create_echo_mining resources",
         "pack_format": 9,
         "forge:resource_pack_format": 8,
         "forge:data_pack_format": 9
